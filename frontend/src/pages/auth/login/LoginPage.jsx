@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import XSvg from "../../../components/svgs/X";
+// import XSvg from "../../../components/svgs/X";
 
 import { MdOutlineMail } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
@@ -58,12 +58,20 @@ const LoginPage = () => {
 	return (
 		<div className='max-w-screen-xl mx-auto flex h-screen'>
 			<div className='flex-1 hidden lg:flex items-center  justify-center'>
-				<XSvg className='lg:w-2/3 fill-white' />
+				<img src="/AkinMinds.png" alt="AkinMinds" className="w-64 object-contain drop-shadow-2xl"/>
 			</div>
 			<div className='flex-1 flex flex-col justify-center items-center'>
 				<form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
-					<XSvg className='w-24 lg:hidden fill-white' />
-					<h1 className='text-4xl font-extrabold text-white'>{"Let's"} go.</h1>
+					<img src="/AkinMinds.png" alt="AkinMinds" className="w-24 lg:hidden rounded-xl" />
+					<div className="flex flex-col items-center gap-4 mb-6">
+						<h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-300 bg-clip-text text-transparent">
+							Welcome Back
+						</h1>
+
+						<p className="text-slate-400 text-sm tracking-wide">
+							Connect. Build. Grow.
+						</p>
+					</div>
 					<label className='input input-bordered rounded flex items-center gap-2'>
 						<MdOutlineMail />
 						<input
@@ -87,7 +95,7 @@ const LoginPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full btn-primary text-white'>
+					<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white'>
 						{isPending ? "Loading..." : "Login"}
 					</button>
 					{isError && <p className='text-red-500'>{error.message}</p>}
@@ -95,7 +103,7 @@ const LoginPage = () => {
 				<div className='flex flex-col gap-2 mt-4'>
 					<p className='text-white text-lg'>{"Don't"} have an account?</p>
 					<Link to='/signup'>
-						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
+						<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white btn-outline w-full'>Sign up</button>
 					</Link>
 				</div>
 			</div>

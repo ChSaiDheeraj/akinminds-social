@@ -125,7 +125,7 @@ const Post = ({ post }) => {
 
 	return (
 		<>
-			<div className='flex gap-2 items-start p-4 border-b border-gray-700'>
+			<div className='flex gap-3 items-start p-5 border border-cyan-500/10 bg-[#071827]/90 rounded-3xl mb-5 shadow-xl shadow-black/20 backdrop-blur-md hover:border-cyan-400/20 transition-all duration-300'>
 				<div className='avatar'>
 					<Link to={`/profile/${postOwner.username}`} className='w-8 rounded-full overflow-hidden'>
 						<img src={postOwner.profileImg || "/avatar-placeholder.png"} />
@@ -133,10 +133,10 @@ const Post = ({ post }) => {
 				</div>
 				<div className='flex flex-col flex-1'>
 					<div className='flex gap-2 items-center'>
-						<Link to={`/profile/${postOwner.username}`} className='font-bold'>
+						<Link to={`/profile/${postOwner.username}`} className='font-semibold text-white tracking-tight'>
 							{postOwner.fullName}
 						</Link>
-						<span className='text-gray-700 flex gap-1 text-sm'>
+						<span className='text-slate-400 flex gap-1 text-sm'>
 							<Link to={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
 							<span>·</span>
 							<span>{formattedDate}</span>
@@ -151,12 +151,12 @@ const Post = ({ post }) => {
 							</span>
 						)}
 					</div>
-					<div className='flex flex-col gap-3 overflow-hidden'>
+					<div className='flex flex-col gap-2 overflow-hidden mt-1'>
 						<span>{post.text}</span>
 						{post.img && (
 							<img
 								src={post.img}
-								className='h-80 object-contain rounded-lg border border-gray-700'
+								className='rounded-3xl w-full max-h-[420px] object-cover object-top mt-3 border border-white/10'
 								alt=''
 							/>
 						)}
@@ -167,8 +167,8 @@ const Post = ({ post }) => {
 								className='flex gap-1 items-center cursor-pointer group'
 								onClick={() => document.getElementById("comments_modal" + post._id).showModal()}
 							>
-								<FaRegComment className='w-4 h-4  text-slate-500 group-hover:text-sky-400' />
-								<span className='text-sm text-slate-500 group-hover:text-sky-400'>
+								<FaRegComment className='w-4 h-4  text-slate-500 group-hover:text-cyan-400' />
+								<span className='text-sm text-slate-500 group-hover:text-cyan-400'>
 									{post.comments.length}
 								</span>
 							</div>
@@ -193,8 +193,8 @@ const Post = ({ post }) => {
 												</div>
 												<div className='flex flex-col'>
 													<div className='flex items-center gap-1'>
-														<span className='font-bold'>{comment.user.fullName}</span>
-														<span className='text-gray-700 text-sm'>
+														<span className='font-semibold text-white tracking-tight'>{comment.user.fullName}</span>
+														<span className='text-slate-400 text-sm'>
 															@{comment.user.username}
 														</span>
 													</div>
@@ -213,7 +213,7 @@ const Post = ({ post }) => {
 											value={comment}
 											onChange={(e) => setComment(e.target.value)}
 										/>
-										<button className='btn btn-primary rounded-full btn-sm text-white px-4'>
+										<button className='btn className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" rounded-full btn-sm text-white px-4'>
 											{isCommenting ? <LoadingSpinner size='md' /> : "Post"}
 										</button>
 									</form>
@@ -222,14 +222,14 @@ const Post = ({ post }) => {
 									<button className='outline-none'>close</button>
 								</form>
 							</dialog>
-							<div className='flex gap-1 items-center group cursor-pointer'>
+							<div className='flex gap-2 items-center group cursor-pointer transition-all duration-300'>
 								<BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' />
 								<span className='text-sm text-slate-500 group-hover:text-green-500'>0</span>
 							</div>
-							<div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
+							<div className='flex gap-2 items-center group cursor-pointer transition-all duration-300' onClick={handleLikePost}>
 								{isLiking && <LoadingSpinner size='sm' />}
 								{!isLiked && !isLiking && (
-									<FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
+									<FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500 group-hover:scale-110 transition-all duration-300' />
 								)}
 								{isLiked && !isLiking && (
 									<FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500 ' />

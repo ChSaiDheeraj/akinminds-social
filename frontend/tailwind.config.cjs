@@ -15,8 +15,17 @@ module.exports = {
 			{
 				black: {
 					...daisyUIThemes["black"],
-					primary: "rgb(29, 155, 240)",
-					secondary: "rgb(24, 24, 24)",
+
+					primary: "#06B6D4",      // cyan
+					secondary: "#1E3A8A",    // deep blue
+					accent: "#F59E0B",       // gold
+					neutral: "#0F172A",      // surface dark
+					"base-100": "#050816",   // background
+
+					info: "#38BDF8",
+					success: "#22C55E",
+					warning: "#F59E0B",
+					error: "#EF4444",
 				},
 			},
 		],
