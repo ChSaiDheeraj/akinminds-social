@@ -96,8 +96,7 @@ export const updateUser = async (req, res) => {
 
 	try {
 		let user = await User.findById(userId);
-		console.log(profileImg);
-		console.log(coverImg);
+
 		if (!user) return res.status(404).json({ message: "User not found" });
 
 		if ((!newPassword && currentPassword) || (!currentPassword && newPassword)) {
