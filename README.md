@@ -392,7 +392,7 @@ Before deploying, make sure the following changes are applied to your codebase.
 If your frontend currently uses relative paths like:
 
 ```js
-fetch("/api/posts")
+fetch(`${import.meta.env.VITE_API_BASE_URL}/api/posts")
 ```
 
 Change every occurrence to use the environment variable:
