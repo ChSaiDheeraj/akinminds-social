@@ -36,26 +36,20 @@ const ProfilePage = () => {
 		refetch,
 		isRefetching,
 	} = useQuery({
-		queryKey: ["userProfile"],
+		queryKey: ["userProfile", username],
 		queryFn: async () => {
-			try {
-				const res = await fetch(`/api/users/profile/${username}`);
-				const data = await res.json();
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
-			}
+			const res = await fetch(`/api/users/profile/${username}`);
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Something went wrong");
+			return data;
 		},
 	});
 
 	const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
 
-	const isMyProfile = authUser._id === user?._id;
+	const isMyProfile = authUser?._id === user?._id;
 	const memberSinceDate = formatMemberSinceDate(user?.createdAt);
-	const amIFollowing = authUser?.following.includes(user?._id);
+	const amIFollowing = authUser?.following?.includes(user?._id) ?? false;
 
 	const handleImgChange = (e, state) => {
 		const file = e.target.files[0];
@@ -150,7 +144,7 @@ const ProfilePage = () => {
 								)}
 								{(coverImg || profileImg) && (
 									<button
-										className='btn className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" rounded-full btn-sm text-white px-4 ml-2'
+										className='btn rounded-full btn-primary btn-sm text-white px-4 ml-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300'
 										onClick={async () => {
 											await updateProfile({ coverImg, profileImg });
 											setProfileImg(null);

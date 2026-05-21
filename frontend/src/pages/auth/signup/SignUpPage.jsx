@@ -20,32 +20,23 @@ const SignUpPage = () => {
 
 	const queryClient = useQueryClient();
 
-	const { mutate, isError, isPending, error } = useMutation({
+	const { mutate, isError, isLoading, error } = useMutation({
 		mutationFn: async ({ email, username, fullName, password }) => {
-			try {
-				const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ email, username, fullName, password }),
-				});
+			const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, username, fullName, password }),
+				credentials: "include",
+			});
 
-				const data = await res.json();
-				if (!res.ok) throw new Error(data.error || "Failed to create account");
-				console.log(data);
-				return data;
-			} catch (error) {
-				console.error(error);
-				throw error;
-			}
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Failed to create account");
+			return data;
 		},
 		onSuccess: () => {
 			toast.success("Account created successfully");
-
-			{
-				/* Added this line below, after recording the video. I forgot to add this while recording, sorry, thx. */
-			}
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
 		},
 	});
@@ -114,15 +105,18 @@ const SignUpPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white'>
-						{isPending ? "Loading..." : "Sign up"}
+					<button
+						className='btn rounded-full btn-primary bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300'
+						disabled={isLoading}
+					>
+						{isLoading ? "Loading..." : "Sign up"}
 					</button>
-					{isError && <p className='text-red-500'>{error.message}</p>}
+					{isError && <p className='text-red-500'>{error?.message}</p>}
 				</form>
 				<div className='flex flex-col lg:w-2/3 gap-2 mt-4'>
 					<p className='text-white text-lg'>Already have an account?</p>
 					<Link to='/login'>
-						<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white btn-outline w-full'>Sign in</button>
+						<button className='btn rounded-full btn-outline w-full'>Sign in</button>
 					</Link>
 				</div>
 			</div>

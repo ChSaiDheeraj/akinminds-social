@@ -15,27 +15,22 @@ const CreatePost = () => {
 
 	const {
 		mutate: createPost,
-		isPending,
+		isLoading,
 		isError,
 		error,
 	} = useMutation({
 		mutationFn: async ({ text, img }) => {
-			try {
-				const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/posts/create", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ text, img }),
-				});
-				const data = await res.json();
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
-			}
+			const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/posts/create`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ text, img }),
+				credentials: "include",
+			});
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Something went wrong");
+			return data;
 		},
 
 		onSuccess: () => {
@@ -98,11 +93,14 @@ const CreatePost = () => {
 						<BsEmojiSmileFill className='fill-primary w-5 h-5 cursor-pointer' />
 					</div>
 					<input type='file' accept='image/*' hidden ref={imgRef} onChange={handleImgChange} />
-					<button className='btn className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" rounded-full btn-sm text-white px-4'>
-						{isPending ? "Posting..." : "Post"}
+					<button
+						className='btn rounded-full btn-primary btn-sm text-white px-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300'
+						disabled={isLoading}
+					>
+						{isLoading ? "Posting..." : "Post"}
 					</button>
 				</div>
-				{isError && <div className='text-red-500'>{error.message}</div>}
+				{isError && <div className='text-red-500'>{error?.message}</div>}
 			</form>
 		</div>
 	);
