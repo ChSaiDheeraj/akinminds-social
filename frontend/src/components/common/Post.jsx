@@ -16,27 +16,23 @@ const Post = ({ post }) => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 	const queryClient = useQueryClient();
 	const postOwner = post.user;
-	const isLiked = post.likes.includes(authUser._id);
+	const isLiked = authUser?._id ? post.likes.includes(authUser._id) : false;
 
-	const isMyPost = authUser._id === post.user._id;
+	const isMyPost = authUser?._id === post.user?._id;
 
 	const formattedDate = formatPostDate(post.createdAt);
 
-	const { mutate: deletePost, isPending: isDeleting } = useMutation({
+	const { mutate: deletePost, isLoading: isDeleting } = useMutation({
 		mutationFn: async () => {
-			try {
-				const res = await fetch(`/api/posts/${post._id}`, {
-					method: "DELETE",
-				});
-				const data = await res.json();
+			const res = await fetch(`/api/posts/${post._id}`, {
+				method: "DELETE",
+			});
+			const data = await res.json();
 
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
+			if (!res.ok) {
+				throw new Error(data.error || "Something went wrong");
 			}
+			return data;
 		},
 		onSuccess: () => {
 			toast.success("Post deleted successfully");
@@ -44,20 +40,16 @@ const Post = ({ post }) => {
 		},
 	});
 
-	const { mutate: likePost, isPending: isLiking } = useMutation({
+	const { mutate: likePost, isLoading: isLiking } = useMutation({
 		mutationFn: async () => {
-			try {
-				const res = await fetch(`/api/posts/like/${post._id}`, {
-					method: "POST",
-				});
-				const data = await res.json();
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
+			const res = await fetch(`/api/posts/like/${post._id}`, {
+				method: "POST",
+			});
+			const data = await res.json();
+			if (!res.ok) {
+				throw new Error(data.error || "Something went wrong");
 			}
+			return data;
 		},
 		onSuccess: (updatedLikes) => {
 			// this is not the best UX, bc it will refetch all posts
@@ -65,6 +57,7 @@ const Post = ({ post }) => {
 
 			// instead, update the cache directly for that post
 			queryClient.setQueryData(["posts"], (oldData) => {
+				if (!Array.isArray(oldData)) return oldData;
 				return oldData.map((p) => {
 					if (p._id === post._id) {
 						return { ...p, likes: updatedLikes };
@@ -78,25 +71,21 @@ const Post = ({ post }) => {
 		},
 	});
 
-	const { mutate: commentPost, isPending: isCommenting } = useMutation({
+	const { mutate: commentPost, isLoading: isCommenting } = useMutation({
 		mutationFn: async () => {
-			try {
-				const res = await fetch(`/api/posts/comment/${post._id}`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ text: comment }),
-				});
-				const data = await res.json();
+			const res = await fetch(`/api/posts/comment/${post._id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ text: comment }),
+			});
+			const data = await res.json();
 
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-				return data;
-			} catch (error) {
-				throw new Error(error);
+			if (!res.ok) {
+				throw new Error(data.error || "Something went wrong");
 			}
+			return data;
 		},
 		onSuccess: () => {
 			toast.success("Comment posted successfully");
@@ -213,7 +202,7 @@ const Post = ({ post }) => {
 											value={comment}
 											onChange={(e) => setComment(e.target.value)}
 										/>
-										<button className='btn className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" rounded-full btn-sm text-white px-4'>
+										<button className='btn rounded-full btn-primary btn-sm text-white px-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300' disabled={isCommenting || !comment.trim()}>
 											{isCommenting ? <LoadingSpinner size='md' /> : "Post"}
 										</button>
 									</form>
