@@ -358,8 +358,8 @@ Creates 10 demo users. All use password: `password123`
 # 11. Screenshots
 
 ## 🔐 Login Page
-
-<img src="./screenshots/LoginPage.png" width="100%" />
+ 
+<img src="https://github.com/ChSaiDheeraj/akinminds-social/blob/main/Screenshots/LoginPage.png" width="300" alt="Emergency Features">
 
 ---
 
