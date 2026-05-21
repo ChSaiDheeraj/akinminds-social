@@ -42,8 +42,8 @@ The project focuses on:
 
 # 🚀 Live Demo
 
-🌐 Frontend:
-*(Link will be added after deployment)*
+🌐 Frontend: https://akinminds-social-1.onrender.com/login
+
 
 ---
 
