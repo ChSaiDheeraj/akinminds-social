@@ -1,4 +1,3 @@
-````md
 # 🧠 AkinMinds
 
 > A modern full-stack MERN social media platform inspired by X/Twitter with real-time social interactions, image uploads, profile management, and responsive UI.
@@ -18,10 +17,11 @@
 9. [Cloudinary Integration](#9-cloudinary-integration)
 10. [How to Run](#10-how-to-run)
 11. [Screenshots](#11-screenshots)
-12. [Future Improvements](#12-future-improvements)
-13. [Deployment](#13-deployment)
-14. [Contributors](#14-contributors)
-15. [Conclusion](#15-conclusion)
+12. [Production Fixes Before Deployment](#12-production-fixes-before-deployment)
+13. [Deployment Guide](#13-deployment-guide)
+14. [Future Improvements](#14-future-improvements)
+15. [Contributors](#15-contributors)
+16. [Conclusion](#16-conclusion)
 
 ---
 
@@ -31,26 +31,26 @@ AkinMinds is a modern full-stack MERN social media platform built for developers
 
 The project focuses on:
 
-* scalable MERN architecture
-* responsive modern UI
-* secure JWT authentication
-* image uploads using Cloudinary
-* full frontend-backend integration
-* social feed experience inspired by X/Twitter
+* Scalable MERN architecture
+* Responsive modern UI
+* Secure JWT authentication
+* Image uploads using Cloudinary
+* Full frontend-backend integration
+* Social feed experience inspired by X/Twitter
 
 ---
 
 # 🚀 Live Demo
 
-🌐 Frontend:  
-https://your-render-link.onrender.com
+🌐 Frontend:
+*(Link will be added after deployment)*
 
 ---
 
 # 📦 GitHub Repository
 
-🔗 Repository:  
-https://github.com/YOUR_USERNAME/AkinMinds
+🔗 Repository:
+https://github.com/ChSaiDheeraj/akinminds-social
 
 ---
 
@@ -63,6 +63,8 @@ https://github.com/YOUR_USERNAME/AkinMinds
 * ❤️ Like Posts
 * 💬 Comment System
 * 👤 User Profile Management
+* 🔔 Notifications
+* 🌙 Light / Dark Theme (DaisyUI)
 * ☁️ Cloudinary Integration
 * ⚡ REST API Architecture
 * 🎨 Responsive Premium UI
@@ -82,59 +84,79 @@ Backend (Node.js + Express)
 MongoDB Atlas Database
         ↓
 JWT Authentication + Cloudinary Storage
-````
+```
 
 ---
 
 # 4. Tech Stack
 
-| Technology       | Purpose             |
-| ---------------- | ------------------- |
-| React            | Frontend UI         |
-| TailwindCSS      | Styling             |
-| DaisyUI          | UI Components       |
-| Vite             | Frontend Build Tool |
-| React Query      | Data Fetching       |
-| React Router DOM | Routing             |
-| Node.js          | Backend Runtime     |
-| Express.js       | REST APIs           |
-| MongoDB Atlas    | Database            |
-| Mongoose         | ODM                 |
-| JWT              | Authentication      |
-| bcrypt.js        | Password Hashing    |
-| Cloudinary       | Image Hosting       |
-| Render           | Deployment          |
+| Technology       | Purpose              |
+| ---------------- | -------------------- |
+| React            | Frontend UI          |
+| TailwindCSS      | Styling              |
+| DaisyUI          | UI Components        |
+| Vite             | Frontend Build Tool  |
+| React Query      | Data Fetching        |
+| React Router DOM | Routing              |
+| React Hot Toast  | Notifications UI     |
+| Node.js          | Backend Runtime      |
+| Express.js       | REST APIs            |
+| MongoDB Atlas    | Database             |
+| Mongoose         | ODM                  |
+| JWT              | Authentication       |
+| bcrypt.js        | Password Hashing     |
+| Cloudinary       | Image Hosting        |
+| Render           | Deployment           |
 
 ---
 
 # 5. Folder Structure
 
-```bash
+```text
 twitter-clone/
 │
 ├── backend/
 │   ├── controllers/
+│   │   ├── auth.controller.js
+│   │   ├── notification.controller.js
+│   │   ├── post.controller.js
+│   │   └── user.controller.js
 │   ├── db/
+│   │   └── connectMongoDB.js
 │   ├── lib/
+│   │   └── utils/
+│   │       └── generateToken.js
 │   ├── middleware/
+│   │   └── protectRoute.js
 │   ├── models/
+│   │   ├── notification.model.js
+│   │   ├── post.model.js
+│   │   └── user.model.js
 │   ├── routes/
+│   │   ├── auth.route.js
+│   │   ├── notification.route.js
+│   │   ├── post.route.js
+│   │   └── user.route.js
+│   ├── scripts/
+│   │   └── seedUsers.js
 │   ├── server.js
 │   └── .env
 │
 ├── frontend/
 │   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── utils/
-│   │   ├── App.jsx
-│   │   └── main.jsx
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── hooks/
+│       ├── utils/
+│       ├── App.jsx
+│       └── main.jsx
 │
 ├── screenshots/
-├── README.md
-└── package.json
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
 ---
@@ -156,7 +178,7 @@ twitter-clone/
 * Login system
 * Registration system
 * JWT authentication
-* Persistent sessions
+* Persistent sessions via HTTP-only cookies
 
 ---
 
@@ -179,6 +201,13 @@ twitter-clone/
 
 ---
 
+## 🔔 Notifications
+
+* In-app notification feed
+* Like and follow event alerts
+
+---
+
 # 7. Backend Features
 
 ## 🔐 Authentication APIs
@@ -186,7 +215,7 @@ twitter-clone/
 * Register User
 * Login User
 * Logout User
-* JWT Verification
+* JWT Verification Middleware
 
 ---
 
@@ -197,6 +226,7 @@ twitter-clone/
 * Like Post
 * Comment on Post
 * Fetch All Posts
+* Fetch Following Feed
 
 ---
 
@@ -204,7 +234,15 @@ twitter-clone/
 
 * Get User Profile
 * Suggested Users
+* Follow / Unfollow Users
 * Update User Profile
+
+---
+
+## 🔔 Notification APIs
+
+* Get Notifications
+* Delete Notifications
 
 ---
 
@@ -220,15 +258,15 @@ twitter-clone/
 # 8. Authentication Flow
 
 ```text
-User Login/Register
+User Login / Register
         ↓
 JWT Token Generated
         ↓
-Token Stored in Cookies
+Token Stored in HTTP-only Cookie
         ↓
 Protected API Requests
         ↓
-Backend Token Verification
+Backend Token Verification (protectRoute middleware)
 ```
 
 ---
@@ -252,9 +290,8 @@ AkinMinds uses Cloudinary for secure cloud-based image hosting.
 ## Step 1 — Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/AkinMinds.git
-
-cd AkinMinds
+git clone https://github.com/ChSaiDheeraj/akinminds-social.git
+cd akinminds-social
 ```
 
 ---
@@ -262,26 +299,18 @@ cd AkinMinds
 ## Step 2 — Setup Backend
 
 ```bash
-cd backend
-
 npm install
 ```
 
-Create `.env`
+Create `.env` in the project root:
 
 ```env
-PORT=5000
-
+PORT=5001
 MONGO_URI=your_mongodb_uri
-
 JWT_SECRET=your_secret_key
-
 NODE_ENV=development
-
 CLOUDINARY_CLOUD_NAME=your_cloud_name
-
 CLOUDINARY_API_KEY=your_api_key
-
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
@@ -295,12 +324,11 @@ npm run dev
 
 ## Step 3 — Setup Frontend
 
+Open a new terminal:
+
 ```bash
-cd frontend
-
-npm install
-
-npm run dev
+npm install --prefix frontend
+npm run dev --prefix frontend
 ```
 
 Frontend runs on:
@@ -312,8 +340,18 @@ http://localhost:3000
 Backend runs on:
 
 ```text
-http://localhost:5000
+http://localhost:5001
 ```
+
+---
+
+## Step 4 — (Optional) Seed Demo Users
+
+```bash
+npm run seed:users
+```
+
+Creates 10 demo users. All use password: `password123`
 
 ---
 
@@ -343,89 +381,207 @@ http://localhost:5000
 
 ---
 
-# 12. Future Improvements
+# 12. Production Fixes Before Deployment
 
-* [ ] Follow / Unfollow System
-* [ ] Real-Time Messaging
-* [ ] Notifications System
-* [ ] Search Users
-* [ ] AI Post Recommendations
-* [ ] Video Upload Support
-* [ ] Dark/Light Theme Toggle
-* [ ] Real-Time WebSocket Updates
-* [ ] Mobile Application
-* [ ] Admin Dashboard
+Before deploying, make sure the following changes are applied to your codebase.
 
 ---
 
-# 13. Deployment
+## 🔗 Fix Frontend API URLs
+
+If your frontend currently uses relative paths like:
+
+```js
+fetch("/api/posts")
+```
+
+Change every occurrence to use the environment variable:
+
+```js
+fetch(`${import.meta.env.VITE_API_BASE_URL}/api/posts`)
+```
+
+Do this for every API call in the frontend.
+
+---
+
+## 🌐 Fix CORS in Backend
+
+Inside `backend/server.js`, configure CORS for production:
+
+```js
+app.use(
+  cors({
+    origin: "https://YOUR_FRONTEND_URL.onrender.com",
+    credentials: true,
+  })
+);
+```
+
+Replace `YOUR_FRONTEND_URL` with your actual Render frontend URL after deployment.
+
+---
+
+## 🍪 Fix JWT Cookie Config for Production
+
+In your auth controller where cookies are set:
+
+```js
+res.cookie("jwt", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "none",
+});
+```
+
+This ensures cookies work correctly across domains in production.
+
+---
+
+# 13. Deployment Guide
+
+## Platform Overview
 
 | Platform | Service       |
 | -------- | ------------- |
-| Frontend | Render        |
-| Backend  | Render        |
+| Frontend | Render (Static Site) |
+| Backend  | Render (Web Service) |
 | Database | MongoDB Atlas |
 | Storage  | Cloudinary    |
 
 ---
 
-# 🚀 Deployment Guide
+# 13. Deployment Guide
 
-## Backend Deployment (Render)
+## Step 1 — Deploy Backend First
 
-1. Push project to GitHub
-2. Go to Render
-3. Create New Web Service
-4. Connect GitHub repository
-5. Add Environment Variables
-6. Deploy backend
-
----
-
-## Frontend Deployment (Render)
-
-1. Create Static Site
-2. Connect frontend repository
-3. Build Command:
-
-```bash
-npm run build
-```
-
-4. Publish Directory:
+Go to [Render Dashboard](https://dashboard.render.com) and click:
 
 ```text
-dist
+New + → Web Service
 ```
 
----
+Select the `akinminds-social` repository.
 
-# 🌍 Universal Link
+### Backend Settings
 
-After deployment your app will get a public link like:
+| Setting        | Value           |
+| -------------- | --------------- |
+| Name           | `akinminds-api` |
+| Root Directory | `backend`       |
+| Runtime        | Node            |
+| Build Command  | `npm install`   |
+| Start Command  | `node server.js` |
+
+### Backend Environment Variables
+
+Add the following in the Render dashboard:
+
+```env
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret_key
+NODE_ENV=production
+CLOUDINARY_CLOUD_NAME=dvbx0vdvy
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+Click **Create Web Service** and wait for deployment.
+
+After it deploys, you will get a URL like:
 
 ```text
-https://akinminds.onrender.com
+https://akinminds-api.onrender.com
 ```
 
-You can later connect:
-
-* custom domain
-* HTTPS
-* SEO metadata
-* social previews
+Copy this URL — you need it for the frontend.
 
 ---
 
-# 14. Contributors
+## Step 2 — Deploy Frontend
 
-| Name               | GitHub                                                               |
-| ------------------ | -------------------------------------------------------------------- |
-| Sai Dheeraj Chakka | [https://github.com/YOUR_USERNAME](https://github.com/YOUR_USERNAME) |
+Click:
+
+```text
+New + → Static Site
+```
+
+Select the same `akinminds-social` repository.
+
+### Frontend Settings
+
+| Setting           | Value                    |
+| ----------------- | ------------------------ |
+| Root Directory    | `frontend`               |
+| Build Command     | `npm install && npm run build` |
+| Publish Directory | `dist`                   |
+
+### Frontend Environment Variable
+
+```env
+VITE_API_BASE_URL=https://akinminds-api.onrender.com
+```
+
+Use your actual backend URL from Step 1.
+
+Click **Create Static Site** and wait for deployment.
 
 ---
 
-# 15. Conclusion
+## Step 3 — Update CORS After Frontend Deploys
+
+Once your frontend URL is live (e.g. `https://akinminds.onrender.com`), go back to your backend `server.js` and update:
+
+```js
+origin: "https://akinminds.onrender.com"
+```
+
+Push the change and redeploy the backend.
+
+---
+
+## Step 4 — Add Repository Description on GitHub
+
+On the right side of your GitHub repo page, click the **⚙️ gear icon** next to "About" and fill in:
+
+**Description:**
+
+```text
+Modern MERN social media platform inspired by X/Twitter with JWT auth, Cloudinary uploads, and responsive UI.
+```
+
+**Topics:**
+
+```text
+mern react mongodb express nodejs social-media tailwindcss cloudinary jwt-authentication fullstack
+```
+
+**Website:** Add your frontend URL after deployment.
+
+---
+
+# 14. Future Improvements
+
+* [ ] Real-Time Messaging (WebSockets)
+* [ ] Real-Time Notifications
+* [ ] Search Users
+* [ ] AI Post Recommendations
+* [ ] Video Upload Support
+* [ ] Admin Dashboard
+* [ ] Mobile Application
+* [ ] SEO Metadata & Social Previews
+
+---
+
+# 15. Contributors
+
+| Name               | GitHub                                          |
+| ------------------ | ----------------------------------------------- |
+| Sai Dheeraj Chakka | [ChSaiDheeraj](https://github.com/ChSaiDheeraj) |
+
+---
+
+# 16. Conclusion
 
 AkinMinds demonstrates a complete full-stack MERN social media solution combining:
 
@@ -441,6 +597,3 @@ The project showcases practical industry-level MERN stack development concepts a
 ---
 
 > ⭐ If you found this project useful, consider starring the repository on GitHub!
-
-```
-```
