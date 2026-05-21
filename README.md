@@ -359,7 +359,7 @@ Creates 10 demo users. All use password: `password123`
 
 ## 🔐 Login Page
 
-![LOGIN](./screenshots/login.png)
+<img src="./screenshots/LoginPage.png" width="100%" />
 
 ---
 
