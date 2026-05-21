@@ -13,30 +13,22 @@ const NotificationPage = () => {
 	const { data: notifications, isLoading } = useQuery({
 		queryKey: ["notifications"],
 		queryFn: async () => {
-			try {
-				const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications");
-				const data = await res.json();
-				if (!res.ok) throw new Error(data.error || "Something went wrong");
-				return data;
-			} catch (error) {
-				throw new Error(error);
-			}
+			const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications`);
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Something went wrong");
+			return data;
 		},
 	});
 
 	const { mutate: deleteNotifications } = useMutation({
 		mutationFn: async () => {
-			try {
-				const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications", {
-					method: "DELETE",
-				});
-				const data = await res.json();
-
-				if (!res.ok) throw new Error(data.error || "Something went wrong");
-				return data;
-			} catch (error) {
-				throw new Error(error);
-			}
+			const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications`, {
+				method: "DELETE",
+				credentials: "include",
+			});
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Something went wrong");
+			return data;
 		},
 		onSuccess: () => {
 			toast.success("Notifications deleted successfully");
@@ -61,7 +53,7 @@ const NotificationPage = () => {
 							className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
 						>
 							<li>
-								<a onClick={deleteNotifications}>Delete all notifications</a>
+								<a onClick={() => deleteNotifications()}>Delete all notifications</a>
 							</li>
 						</ul>
 					</div>
