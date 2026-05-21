@@ -17,28 +17,25 @@ const LoginPage = () => {
 
 	const {
 		mutate: loginMutation,
-		isPending,
+		isLoading,
 		isError,
 		error,
 	} = useMutation({
 		mutationFn: async ({ username, password }) => {
-			try {
-				const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ username, password }),
-				});
+			const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ username, password }),
+				credentials: "include",
+			});
 
-				const data = await res.json();
+			const data = await res.json();
 
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-			} catch (error) {
-				throw new Error(error);
-			}
+			if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+			return data;
 		},
 		onSuccess: () => {
 			// refetch the authUser
@@ -95,15 +92,18 @@ const LoginPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white'>
-						{isPending ? "Loading..." : "Login"}
+					<button
+						className='btn rounded-full btn-primary bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300'
+						disabled={isLoading}
+					>
+						{isLoading ? "Loading..." : "Login"}
 					</button>
 					{isError && <p className='text-red-500'>{error.message}</p>}
 				</form>
 				<div className='flex flex-col gap-2 mt-4'>
 					<p className='text-white text-lg'>{"Don't"} have an account?</p>
 					<Link to='/signup'>
-						<button className='btn rounded-full className="btn btn-primary  bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300" text-white btn-outline w-full'>Sign up</button>
+						<button className='btn rounded-full btn-outline w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 border-none text-white font-semibold hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-cyan-500/30 transition-all duration-300'>Sign up</button>
 					</Link>
 				</div>
 			</div>
