@@ -42,7 +42,7 @@ The project focuses on:
 
 # 🚀 Live Demo
 
-🌐 Frontend: https://akinminds-social-1.onrender.com/login
+🌐 Frontend: https://akinminds-social-1.onrender.com
 
 
 ---
